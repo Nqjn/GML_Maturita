@@ -1,8 +1,12 @@
-print("fewugtifgewofgwed")
-for i in range(10):
-    print("LMAO!")
-    
-##_dgiqytdwytefi
-def odd_triangle_matrix(n):
-    x = 1
- 
+from Excel import *
+from GUI import *
+from MyOCR import *
+
+
+def main():
+    res = vyrobit_okno()
+    r = ReadData(res)
+    print(f"Vybraný soubor z GUI aaaaaaaaaaaaaaaaaaaaaaaaaaaaa: {r}")
+
+if __name__ == "__main__":
+    main()
