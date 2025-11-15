@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
+from MyOCR import ReadData
+
+soubor_cesta = ""
 
 def vyrobit_okno():
     hlavni_okno = tk.Tk()
@@ -16,7 +19,7 @@ def vyrobit_okno():
     tlacitko = tk.Button(
         hlavni_okno,
         text="Vybrat soubor...",
-        command=lambda: vyber_soubor(label_s_cestou),  # Toto je ta magie
+        command=lambda: vyber_soubor(label_s_cestou, hlavni_okno),  # Toto je ta magie
     )
     tlacitko.pack(pady=10)
 
@@ -28,8 +31,10 @@ def vyrobit_okno():
     #    Program zde čeká na akce uživatele (např. kliknutí na tlačítko)
     print("Spouštím GUI, čekám na akci...")
     hlavni_okno.mainloop()
+    return soubor_cesta
+    return label_s_cestou.cget("text")
 
-def vyber_soubor(label_s_cestou: tk.Label):
+def vyber_soubor(label_s_cestou: tk.Label, hlavni_okno: tk.Tk) -> str:
     """
     Tato funkce je volána tlačítkem.
     Už NEVYTVÁŘÍ vlastní 'root' okno.
@@ -40,6 +45,7 @@ def vyber_soubor(label_s_cestou: tk.Label):
         title="Vyberte PNG obrázek",
         filetypes=[
             ("PNG files", "*.png"),
+            ("JPEG files", "*.jpg;*.jpeg"),
             ("All files", "*.*")
         ]
     )
@@ -47,8 +53,12 @@ def vyber_soubor(label_s_cestou: tk.Label):
     if file_path:
         # Pokud byl soubor vybrán, aktualizujeme text v popisku (labelu)
         print(f"Vybrán soubor: {file_path}")
+        global soubor_cesta
+        soubor_cesta = file_path
         label_s_cestou.config(text=f"Vybráno: {file_path}")
-        print("Uzavírám GUI...")
+        # print("Uzavírám GUI...")
+        # hlavni_okno.destroy()
+        ReadData(file_path)
         return file_path
         
         # TADY MŮŽETE ZAVOLAT DALŠÍ FUNKCI PRO ZPRACOVÁNÍ
@@ -66,4 +76,4 @@ def vyber_soubor(label_s_cestou: tk.Label):
 
 # Kód zde bude pokračovat až po zavření okna
 
-vyrobit_okno()
+# vyrobit_okno()
